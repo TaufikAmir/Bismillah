@@ -178,6 +178,42 @@ fatigue_results = {
 fatigue_df = pd.DataFrame(fatigue_results, index=[0])
 st.write(fatigue_df)#PART 2 EXPERIMENT
 
+import matplotlib.pyplot as plt#experiment part 3 
+
+# Prepare the stress range
+sigma_m_vals = np.linspace(0, UTS, 100)
+
+# Calculate the failure lines
+goodman_line = Se * (1 - sigma_m_vals / UTS)
+soderberg_line = Se * (1 - sigma_m_vals / Sy)
+gerber_line = Se * (1 - (sigma_m_vals / UTS)**2)
+
+# Clamp negative values to 0 for display
+goodman_line = np.clip(goodman_line, 0, None)
+soderberg_line = np.clip(soderberg_line, 0, None)
+gerber_line = np.clip(gerber_line, 0, None)
+
+# Plot
+fig, ax = plt.subplots()
+ax.plot(sigma_m_vals, goodman_line, label='Goodman', color='red')
+ax.plot(sigma_m_vals, soderberg_line, label='Soderberg', color='green')
+ax.plot(sigma_m_vals, gerber_line, label='Gerber', color='blue')
+
+# Plot the user's stress point
+ax.plot(sigma_m, sigma_a, 'ko', label='User Point')
+
+# Labels and legend
+ax.set_title('Fluctuating Stress Diagram')
+ax.set_xlabel('Mean Stress, σm (MPa)')
+ax.set_ylabel('Alternating Stress, σa (MPa)')
+ax.grid(True)
+ax.legend()
+ax.set_xlim(left=0)
+ax.set_ylim(bottom=0)
+
+# Show plot in Streamlit
+st.subheader("Fluctuating Stress Diagram")
+st.pyplot(fig)#experiment part 3
 
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
