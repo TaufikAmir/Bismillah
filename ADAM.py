@@ -133,8 +133,8 @@ Sigma_VM_Pipe_Max_Operating_Pressure = (1/m.sqrt(2))*((P1max-P2max)**2+(P2max-P3
 
 Sigma_VM_Pipe_Min_Operating_Pressure = 1/m.sqrt(2)*m.sqrt((P1min-P2min)**2+(P2min-P3min)**2+(P3min-P1min)**2)
 
-# Goodman Criterion Calculation
-SF = 1  # Safety Factor (given)
+# Goodman Criterion Calculation PAER 1
+SF = 1  # aasuming Safety Factor 
 sigma_max = Sigma_VM_Pipe_Max_Operating_Pressure
 sigma_min = Sigma_VM_Pipe_Min_Operating_Pressure
 sigma_a = (sigma_max - sigma_min) / 2
@@ -157,7 +157,8 @@ goodman_results = {
 goodman_df = pd.DataFrame(goodman_results, index=[0])
 
 st.subheader('Goodman Fatigue Failure Assessment')
-st.write(goodman_df)##testing goodman solution
+st.write(goodman_df)##testing goodman solution PART 1
+
 
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
