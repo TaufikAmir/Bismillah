@@ -7,7 +7,7 @@ import math as m
 from PIL import Image
 import os
 from glob import glob
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 st.header("Advanced corrodeD pipe structurAl integrity systeM (ADAM)")
 
@@ -121,7 +121,7 @@ Pressure = [Pvm, PTresca, P_ASME_B31G, P_DnV, P_PCORRC]
 index = ["Pvm (MPa)", "PTresca (MPa)", "P_ASME_B31G (MPa)", "P_DnV (MPa)", "P_PCORRC (MPa)"]
 df = pd.DataFrame({"Burst Pressure (MPa)": Pressure}, index=index)
 
-st.pyplot(df.plot.barh(stacked=True).figure)
+#st.pyplot(df.plot.barh(stacked=True).figure)
 
 # Principle stresses for Maximum Operating Pressure
 P1max = Pop_Max*D/(2*t)
@@ -152,7 +152,7 @@ Stresses = [Sigma_VM_Pipe_Max_Operating_Pressure, Sigma_VM_Pipe_Min_Operating_Pr
 index = ["Svm_Max (MPa)", "Svm_Min (MPa)", "Yield Stress (MPa)", "UTS (MPa)"]
 df = pd.DataFrame({"Stresses (MPa)": Stresses}, index=index)
 
-st.pyplot(df.plot.barh(color={"Stresses (MPa)": "red"}, stacked=True).figure)
+#st.pyplot(df.plot.barh(color={"Stresses (MPa)": "red"}, stacked=True).figure)
 
 st.subheader('Reference')
 st.write('Xian-Kui Zhu, A comparative study of burst failure models for assessing remaining strength of corroded pipelines, Journal of Pipeline Science and Engineering 1 (2021) 36 - 50, https://doi.org/10.1016/j.jpse.2021.01.008')
