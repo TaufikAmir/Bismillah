@@ -178,6 +178,28 @@ fatigue_results = {
 fatigue_df = pd.DataFrame(fatigue_results, index=[0])
 st.write(fatigue_df)#PART 2 EXPERIMENT
 
+# Generate Goodman line part 3
+sigma_m_vals = np.linspace(0, UTS, 500)
+goodman_line = Se * (1 - sigma_m_vals / UTS)
+
+# Plot setup
+fig, ax = plt.subplots()
+ax.plot(sigma_m_vals, goodman_line, label='Goodman Line', color='red', linewidth=2)
+ax.plot(sigma_m, sigma_a, 'bo', label='User Stress Point')  # User's point
+
+# Labels and formatting
+ax.set_title('Goodman Diagram: Alternating Stress vs Mean Stress')
+ax.set_xlabel('Mean Stress, σm (MPa)')
+ax.set_ylabel('Alternating Stress, σa (MPa)')
+ax.grid(True)
+ax.set_xlim(0, UTS)
+ax.set_ylim(0, max(goodman_line) + 10)
+ax.legend()
+
+# Display in Streamlit
+st.subheader("Goodman Diagram")
+st.pyplot(fig)#part 3
+
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
 st.subheader('Von Mises stress of Maximum Operating Pressure')
