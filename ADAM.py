@@ -94,8 +94,39 @@ st.write(user_input_df)
 calculated_param={'Pvm (MPa)': "{:.2f}".format(Pvm)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
 st.subheader('Calculated Intact Pipe Burst Pressure via Von Mises')
-st.write(calculated_param_df)
+st.write(calculated_param_df) #Last Output for sigma_VM_Pipe_Min_Operating_Pressure
 
+# Fatigue Stress Parameters 
+Sigma_a = (Sigma_VM_Pipe_Max_Operating_Pressure - Sigma_VM_Pipe_Min_Operating_Pressure) / 2
+Sigma_m = (Sigma_VM_Pipe_Max_Operating_Pressure + Sigma_VM_Pipe_Min_Operating_Pressure) / 2
+Se = 0.5 * UTS  # Endurance limit assumed as 50% of UTS
+SF = 1  # Safety Factor
+
+# Goodman Criterion
+Goodman = (Sigma_a / (Se / SF)) + (Sigma_m / (UTS)
+
+# Gerber Criterion
+Gerber = (Sigma_m / UTS)**2 + (Sigma_a / Se)
+
+# Soderberg Criterion
+Soderberg = (Sigma_a / Se ) + (Sigma_m / Sy )
+
+# Morrow Criterion (approximation, uses Sy in place of Se mean-corrected)
+Morrow = (Sigma_a / Se ) + (Sigma_m / SF)#Reconfirm dengan Dr. Sf
+
+# Create a DataFrame to display
+fatigue_param = {
+    'Alternating Stress σₐ (MPa)': f"{Sigma_a:.2f}",
+    'Mean Stress σₘ (MPa)': f"{Sigma_m:.2f}",
+    'Endurance Limit Se (MPa)': f"{Se:.2f}",
+    'Goodman Criterion Value': f"{Goodman:.2f}",
+    'Gerber Criterion Value': f"{Gerber:.2f}",
+    'Soderberg Criterion Value': f"{Soderberg:.2f}",
+    'Morrow Criterion Value': f"{Morrow:.2f}"
+}#latest update coding for goodman,gerber, soderberg, morrow
+
+st.subheader('Fatigue Failure Criteria')
+st.write(pd.DataFrame(fatigue_param, index=[0]))
 calculated_param={'PTresca (MPa)': "{:.2f}".format(PTresca)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
 st.subheader('Calculated Intact Pipe Burst Pressure via Tresca')
