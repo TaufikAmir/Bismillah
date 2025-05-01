@@ -96,61 +96,61 @@ calculated_param_df=pd.DataFrame(calculated_param, index=[0])
 st.subheader('Calculated Intact Pipe Burst Pressure via Von Mises')
 st.write(calculated_param_df) #Last Output for sigma_VM_Pipe_Min_Operating_Pressure
 
-# Fatigue Stress Parameters 
-Sigma_a = (Sigma_VM_Pipe_Max_Operating_Pressure - Sigma_VM_Pipe_Min_Operating_Pressure) / 2
-Sigma_m = (Sigma_VM_Pipe_Max_Operating_Pressure + Sigma_VM_Pipe_Min_Operating_Pressure) / 2
-Se = 0.5 * UTS  # Endurance limit assumed as 50% of UTS
-SF = 1  # Safety Factor
+## Fatigue Stress Parameters 
+#-Sigma_a = (Sigma_VM_Pipe_Max_Operating_Pressure - Sigma_VM_Pipe_Min_Operating_Pressure) / 2
+#-Sigma_m = (Sigma_VM_Pipe_Max_Operating_Pressure + Sigma_VM_Pipe_Min_Operating_Pressure) / 2
+#-Se = 0.5 * UTS  # Endurance limit assumed as 50% of UTS
+#-SF = 1  # Safety Factor
 
 # Goodman Criterion
-Goodman = (Sigma_a / (Se / SF)) + (Sigma_m / (UTS))
+#-Goodman = (Sigma_a / (Se / SF)) + (Sigma_m / (UTS))
 
 # Gerber Criterion
-Gerber = (Sigma_m / UTS)**2 + (Sigma_a / Se)
+#-Gerber = (Sigma_m / UTS)**2 + (Sigma_a / Se)
 
 # Soderberg Criterion
-Soderberg = (Sigma_a / Se ) + (Sigma_m / Sy )
+#-Soderberg = (Sigma_a / Se ) + (Sigma_m / Sy )
 
 # Morrow Criterion (approximation, uses Sy in place of Se mean-corrected)
-Morrow = (Sigma_a / Se ) + (Sigma_m / SF)#Reconfirm dengan Dr. Sf
+#-Morrow = (Sigma_a / Se ) + (Sigma_m / SF)#Reconfirm dengan Dr. Sf
 
 # Create a DataFrame to display
-fatigue_param = {
-    'Alternating Stress σₐ (MPa)': f"{Sigma_a:.2f}",
-    'Mean Stress σₘ (MPa)': f"{Sigma_m:.2f}",
-    'Endurance Limit Se (MPa)': f"{Se:.2f}",
-    'Goodman Criterion Value': f"{Goodman:.2f}",
-    'Gerber Criterion Value': f"{Gerber:.2f}",
-    'Soderberg Criterion Value': f"{Soderberg:.2f}",
-    'Morrow Criterion Value': f"{Morrow:.2f}"
-}#latest update coding for goodman,gerber, soderberg, morrow part 1
+#-fatigue_param = {
+#-    'Alternating Stress σₐ (MPa)': f"{Sigma_a:.2f}",
+#-    'Mean Stress σₘ (MPa)': f"{Sigma_m:.2f}",
+#-    'Endurance Limit Se (MPa)': f"{Se:.2f}",
+ #-   'Goodman Criterion Value': f"{Goodman:.2f}",
+ #-   'Gerber Criterion Value': f"{Gerber:.2f}",
+  #-  'Soderberg Criterion Value': f"{Soderberg:.2f}",
+  #-  'Morrow Criterion Value': f"{Morrow:.2f}"
+#}#latest update coding for goodman,gerber, soderberg, morrow part 1
              
 # Display fatigue data as table
-fatigue_data = {
-    'Alternating Stress σₐ (MPa)': f"{Sigma_a:.2f}",
-    'Mean Stress σₘ (MPa)': f"{Sigma_m:.2f}",
-    'Endurance Limit Se (MPa)': f"{Se:.2f}",
-    'Goodman Value': f"{Goodman:.2f}",
-    'Gerber Value': f"{Gerber:.2f}",
-    'Soderberg Value': f"{Soderberg:.2f}",
-    'Morrow Value': f"{Morrow:.2f}"
-}
-st.subheader("Fatigue Stress and Failure Criteria Values")
-st.write(pd.DataFrame(fatigue_data, index=[0]))
+##fatigue_data = {
+#-    'Alternating Stress σₐ (MPa)': f"{Sigma_a:.2f}",
+#-    'Mean Stress σₘ (MPa)': f"{Sigma_m:.2f}",
+#-    'Endurance Limit Se (MPa)': f"{Se:.2f}",
+#-    'Goodman Value': f"{Goodman:.2f}",
+#-    'Gerber Value': f"{Gerber:.2f}",
+#-    'Soderberg Value': f"{Soderberg:.2f}",
+#-    'Morrow Value': f"{Morrow:.2f}"
+#-}
+#-st.subheader("Fatigue Stress and Failure Criteria Values")
+#-st.write(pd.DataFrame(fatigue_data, index=[0]))
 
-# Bar graph for comparison
-st.subheader("Fatigue Criteria Comparison Graph")
-criteria_values = [Goodman, Gerber, Soderberg, Morrow]
-criteria_names = ['Goodman', 'Gerber', 'Soderberg', 'Morrow']
-criteria_df = pd.DataFrame({"Fatigue Criterion Value": criteria_values}, index=criteria_names)
-st.bar_chart(criteria_df)##             
+## Bar graph for comparison
+#-st.subheader("Fatigue Criteria Comparison Graph")
+#-criteria_values = [Goodman, Gerber, Soderberg, Morrow]
+#-criteria_names = ['Goodman', 'Gerber', 'Soderberg', 'Morrow']
+#-criteria_df = pd.DataFrame({"Fatigue Criterion Value": criteria_values}, index=criteria_names)
+#-st.bar_chart(criteria_df)##             
 
-st.subheader('Fatigue Failure Criteria')
-st.write(pd.DataFrame(fatigue_param, index=[0]))
-calculated_param={'PTresca (MPa)': "{:.2f}".format(PTresca)}
-calculated_param_df=pd.DataFrame(calculated_param, index=[0])
-st.subheader('Calculated Intact Pipe Burst Pressure via Tresca')
-st.write(calculated_param_df)#latest update coding for goodman,gerber, soderberg, morrow part 2
+#-st.subheader('Fatigue Failure Criteria')
+#-st.write(pd.DataFrame(fatigue_param, index=[0]))
+#-calculated_param={'PTresca (MPa)': "{:.2f}".format(PTresca)}
+#-calculated_param_df=pd.DataFrame(calculated_param, index=[0])
+#-st.subheader('Calculated Intact Pipe Burst Pressure via Tresca')
+#-st.write(calculated_param_df)#latest update coding for goodman,gerber, soderberg, morrow part 2
 
 # Corroded Pipe
 calculated_param={'P_ASME_B31G (MPa)': "{:.2f}".format(P_ASME_B31G)}
