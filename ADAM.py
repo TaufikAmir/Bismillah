@@ -103,7 +103,7 @@ Se = 0.5 * UTS  # Endurance limit assumed as 50% of UTS
 SF = 1  # Safety Factor
 
 # Goodman Criterion
-Goodman = (Sigma_a / (Se / SF)) + (Sigma_m / (UTS)
+Goodman = (Sigma_a / (Se / SF)) + (Sigma_m / (UTS))
 
 # Gerber Criterion
 Gerber = (Sigma_m / UTS)**2 + (Sigma_a / Se)
