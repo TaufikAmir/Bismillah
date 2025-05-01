@@ -133,6 +133,32 @@ Sigma_VM_Pipe_Max_Operating_Pressure = (1/m.sqrt(2))*((P1max-P2max)**2+(P2max-P3
 
 Sigma_VM_Pipe_Min_Operating_Pressure = 1/m.sqrt(2)*m.sqrt((P1min-P2min)**2+(P2min-P3min)**2+(P3min-P1min)**2)
 
+# Goodman Criterion Calculation
+SF = 1  # Safety Factor (given)
+sigma_max = Sigma_VM_Pipe_Max_Operating_Pressure
+sigma_min = Sigma_VM_Pipe_Min_Operating_Pressure
+sigma_a = (sigma_max - sigma_min) / 2
+sigma_m = (sigma_max + sigma_min) / 2
+
+Se = 0.5 * UTS  # Assumed endurance limit as 0.5 of UTS
+
+# Goodman Equation: (σa / Se) + (σm / Sut)
+Goodman_Value = (sigma_a / Se) + (sigma_m / UTS)
+Goodman_Safe = Goodman_Value <= 1  # Boolean result
+
+# Display in Streamlit
+goodman_results = {
+    'Alternating Stress, σa (MPa)': f"{sigma_a:.2f}",
+    'Mean Stress, σm (MPa)': f"{sigma_m:.2f}",
+    'Endurance Limit, Se (MPa)': f"{Se:.2f}",
+    'Goodman Value': f"{Goodman_Value:.3f}",
+    'Safe According to Goodman?': "Yes" if Goodman_Safe else "No"
+}
+goodman_df = pd.DataFrame(goodman_results, index=[0])
+
+st.subheader('Goodman Fatigue Failure Assessment')
+st.write(goodman_df)##testing goodman solution
+
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
 st.subheader('Von Mises stress of Maximum Operating Pressure')
@@ -143,8 +169,10 @@ calculated_param_df=pd.DataFrame(calculated_param, index=[0])
 st.subheader('Von Mises stress of Minimum Operating Pressure')
 st.write(calculated_param_df)
 
-Stresses = [Sigma_VM_Pipe_Max_Operating_Pressure, Sigma_VM_Pipe_Min_Operating_Pressure, Sy, UTS]
-index = ["Svm_Max (MPa)", "Svm_Min (MPa)", "Yield Stress (MPa)", "UTS (MPa)"]
+#Stresses = [Sigma_VM_Pipe_Max_Operating_Pressure, Sigma_VM_Pipe_Min_Operating_Pressure, Sy, UTS]
+#index = ["Svm_Max (MPa)", "Svm_Min (MPa)", "Yield Stress (MPa)", "UTS (MPa)"]
+Stresses = [Sigma_VM_Pipe_Max_Operating_Pressure, Sigma_VM_Pipe_Min_Operating_Pressure, sigma_a, sigma_m, Se, Sy, UTS]
+index = ["Svm_Max (MPa)", "Svm_Min (MPa)", "σa (MPa)", "σm (MPa)", "Se (MPa)", "Yield Stress (MPa)", "UTS (MPa)"]
 df = pd.DataFrame({"Stresses (MPa)": Stresses}, index=index)
 
 #st.pyplot(df.plot.barh(color={"Stresses (MPa)": "red"}, stacked=True).figure)
