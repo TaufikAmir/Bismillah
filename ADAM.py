@@ -133,31 +133,50 @@ Sigma_VM_Pipe_Max_Operating_Pressure = (1/m.sqrt(2))*((P1max-P2max)**2+(P2max-P3
 
 Sigma_VM_Pipe_Min_Operating_Pressure = 1/m.sqrt(2)*m.sqrt((P1min-P2min)**2+(P2min-P3min)**2+(P3min-P1min)**2)
 
-# Goodman Criterion Calculation PAER 1
-SF = 1  # aasuming Safety Factor 
-sigma_max = Sigma_VM_Pipe_Max_Operating_Pressure
-sigma_min = Sigma_VM_Pipe_Min_Operating_Pressure
-sigma_a = (sigma_max - sigma_min) / 2
-sigma_m = (sigma_max + sigma_min) / 2
+sigma_a = (Sigma_VM_Pipe_Max_Operating_Pressure - Sigma_VM_Pipe_Min_Operating_Pressure) / 2
+sigma_m = (Sigma_VM_Pipe_Max_Operating_Pressure + Sigma_VM_Pipe_Min_Operating_Pressure) / 2
+Se = 0.5 * UTS  # Assumed endurance limit
 
-Se = 0.5 * UTS  # Assumed endurance limit as 0.5 of UTS
-
-# Goodman Equation: (σa / Se) + (σm / Sut)
+# Goodman Criterion PART 2 Experiment
 Goodman_Value = (sigma_a / Se) + (sigma_m / UTS)
-Goodman_Safe = Goodman_Value <= 1  # Boolean result
+Goodman_Safe = Goodman_Value <= 1
 
-# Display in Streamlit
-goodman_results = {
+# Soderberg Criterion
+Soderberg_Value = (sigma_a / Se) + (sigma_m / Sy)
+Soderberg_Safe = Soderberg_Value <= 1
+
+# Gerber Criterion
+Gerber_Value = (sigma_a / Se) + ((sigma_m / UTS) ** 2)
+Gerber_Safe = Gerber_Value <= 1
+
+# Morrow Criterion (more accurate for mean stress effect at high strains)
+# Morrow equation: σa = Se*(1 - σm/UTS)
+Morrow_sigma_a_allow = Se * (1 - (sigma_m / UTS))
+Morrow_Safe = sigma_a <= Morrow_sigma_a_allow
+
+# Streamlit display
+st.subheader('Fatigue Failure Assessment (Goodman, Soderberg, Gerber, Morrow)')
+
+fatigue_results = {
     'Alternating Stress, σa (MPa)': f"{sigma_a:.2f}",
     'Mean Stress, σm (MPa)': f"{sigma_m:.2f}",
     'Endurance Limit, Se (MPa)': f"{Se:.2f}",
+    
     'Goodman Value': f"{Goodman_Value:.3f}",
-    'Safe According to Goodman?': "Yes" if Goodman_Safe else "No"
-}
-goodman_df = pd.DataFrame(goodman_results, index=[0])
+    'Safe (Goodman)': "Yes" if Goodman_Safe else "No",
 
-st.subheader('Goodman Fatigue Failure Assessment')
-st.write(goodman_df)##testing goodman solution PART 1
+    'Soderberg Value': f"{Soderberg_Value:.3f}",
+    'Safe (Soderberg)': "Yes" if Soderberg_Safe else "No",
+
+    'Gerber Value': f"{Gerber_Value:.3f}",
+    'Safe (Gerber)': "Yes" if Gerber_Safe else "No",
+
+    'Morrow Allowable σa (MPa)': f"{Morrow_sigma_a_allow:.2f}",
+    'Safe (Morrow)': "Yes" if Morrow_Safe else "No"
+}
+
+fatigue_df = pd.DataFrame(fatigue_results, index=[0])
+st.write(fatigue_df)#PART 2 EXPERIMENT
 
 
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
