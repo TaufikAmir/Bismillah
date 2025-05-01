@@ -126,7 +126,7 @@ fatigue_param = {
 }#latest update coding for goodman,gerber, soderberg, morrow part 1
              
 # Display fatigue data as table
-#fatigue_data = {
+fatigue_data = {
     'Alternating Stress σₐ (MPa)': f"{Sigma_a:.2f}",
     'Mean Stress σₘ (MPa)': f"{Sigma_m:.2f}",
     'Endurance Limit Se (MPa)': f"{Se:.2f}",
