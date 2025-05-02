@@ -65,7 +65,7 @@ PTresca = 2*t*UTS/(D)
 M = m.sqrt(1+0.8*(L/(m.sqrt(D*t)))) #Folias factor
 
 if L < m.sqrt(20*D*t):
-    P_ASME_B31G = (2*t*UTS/D)*(1-(2/3)*(Dc/t)/1-(2/3)*(Dc/t)/M)
+    P_ASME_B31G = (2*t*UTS/D)(1-(2/3)(Dc/t)/1-(2/3)*(Dc/t)/M)
 
 elif L > m.sqrt(20*D*t):
     P_ASME_B31G = (2*t*UTS/D)*(1-(Dc/t))
@@ -129,9 +129,9 @@ P2min = Pop_Min*D/(4*t)
 P3min = 0
 
 # VM stress Max and Min Operating Pressure
-Sigma_VM_Pipe_Max_Operating_Pressure = (1/m.sqrt(2))*((P1max-P2max)**2+(P2max-P3max)**2+(P3max-P1max)**2)**0.5
+Sigma_VM_Pipe_Max_Operating_Pressure = (1/m.sqrt(2))((P1max-P2max)2+(P2max-P3max)2+(P3max-P1max)2)*0.5
 
-Sigma_VM_Pipe_Min_Operating_Pressure = 1/m.sqrt(2)*m.sqrt((P1min-P2min)**2+(P2min-P3min)**2+(P3min-P1min)**2)
+Sigma_VM_Pipe_Min_Operating_Pressure = 1/m.sqrt(2)m.sqrt((P1min-P2min)2+(P2min-P3min)2+(P3min-P1min)*2)
 
 sigma_a = (Sigma_VM_Pipe_Max_Operating_Pressure - Sigma_VM_Pipe_Min_Operating_Pressure) / 2
 sigma_m = (Sigma_VM_Pipe_Max_Operating_Pressure + Sigma_VM_Pipe_Min_Operating_Pressure) / 2
@@ -154,34 +154,29 @@ Gerber_Safe = Gerber_Value <= 1
 Morrow_sigma_a_allow = Se * (1 - (sigma_m / UTS))
 Morrow_Safe = sigma_a <= Morrow_sigma_a_allow
 
-# Goodman Fatigue Assessment part 3
-calculated_param = {'Goodman Value': "{:.3f}".format(Goodman_Value)}
-calculated_param_df = pd.DataFrame(calculated_param, index=[0])
-st.subheader('Fatigue Failure Assessment: Goodman')
-st.write(calculated_param_df)
+# Streamlit display
+st.subheader('Fatigue Failure Assessment (Goodman, Soderberg, Gerber, Morrow)')
 
+fatigue_results = {
+    'Alternating Stress, σa (MPa)': f"{sigma_a:.2f}",
+    'Mean Stress, σm (MPa)': f"{sigma_m:.2f}",
+    'Endurance Limit, Se (MPa)': f"{Se:.2f}",
+    
+    'Goodman Value': f"{Goodman_Value:.3f}",
+    'Safe (Goodman)': "Yes" if Goodman_Safe else "No",
 
-# Soderberg Fatigue Assessment
-calculated_param = {'Soderberg Value': "{:.3f}".format(Soderberg_Value)}
-calculated_param_df = pd.DataFrame(calculated_param, index=[0])
-st.subheader('Fatigue Failure Assessment: Soderberg')
-st.write(calculated_param_df)
+    'Soderberg Value': f"{Soderberg_Value:.3f}",
+    'Safe (Soderberg)': "Yes" if Soderberg_Safe else "No",
 
+    'Gerber Value': f"{Gerber_Value:.3f}",
+    'Safe (Gerber)': "Yes" if Gerber_Safe else "No",
 
-# Gerber Fatigue Assessment
-calculated_param = {'Gerber Value': "{:.3f}".format(Gerber_Value)}
-calculated_param_df = pd.DataFrame(calculated_param, index=[0])
-st.subheader('Fatigue Failure Assessment: Gerber')
-st.write(calculated_param_df)
+    'Morrow Allowable σa (MPa)': f"{Morrow_sigma_a_allow:.2f}",
+    'Safe (Morrow)': "Yes" if Morrow_Safe else "No"
+}
 
-
-# Morrow Fatigue Assessment
-calculated_param = {'Allowable σₐ (Morrow) (MPa)': "{:.2f}".format(Morrow_sigma_a_allow)}
-calculated_param_df = pd.DataFrame(calculated_param, index=[0])
-st.subheader('Fatigue Failure Assessment: Morrow')
-st.write(calculated_param_df)
-#part 3
-
+fatigue_df = pd.DataFrame(fatigue_results, index=[0])
+st.write(fatigue_df)#PART 2 EXPERIMENT
 
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
