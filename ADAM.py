@@ -162,28 +162,25 @@ st.write(calculated_param_df)
 
 
 # Soderberg Fatigue Assessment
-st.subheader('Fatigue Failure Assessment – Soderberg')
-st.markdown(f"**Alternating Stress, σₐ (MPa):** {sigma_a:.2f}")
-st.markdown(f"**Mean Stress, σₘ (MPa):** {sigma_m:.2f}")
-st.markdown(f"**Endurance Limit, Sₑ (MPa):** {Se:.2f}")
-st.markdown(f"**Soderberg Value:** {Soderberg_Value:.3f}")
-st.markdown(f"**Safe (Soderberg):** {'✅ Yes' if Soderberg_Safe else '❌ No'}")
+calculated_param = {'Soderberg Value': "{:.3f}".format(Soderberg_Value)}
+calculated_param_df = pd.DataFrame(calculated_param, index=[0])
+st.subheader('Fatigue Failure Assessment: Soderberg')
+st.write(calculated_param_df)
+
 
 # Gerber Fatigue Assessment
-st.subheader('Fatigue Failure Assessment – Gerber')
-st.markdown(f"**Alternating Stress, σₐ (MPa):** {sigma_a:.2f}")
-st.markdown(f"**Mean Stress, σₘ (MPa):** {sigma_m:.2f}")
-st.markdown(f"**Endurance Limit, Sₑ (MPa):** {Se:.2f}")
-st.markdown(f"**Gerber Value:** {Gerber_Value:.3f}")
-st.markdown(f"**Safe (Gerber):** {'✅ Yes' if Gerber_Safe else '❌ No'}")
+calculated_param = {'Gerber Value': "{:.3f}".format(Gerber_Value)}
+calculated_param_df = pd.DataFrame(calculated_param, index=[0])
+st.subheader('Fatigue Failure Assessment: Gerber')
+st.write(calculated_param_df)
+
 
 # Morrow Fatigue Assessment
-st.subheader('Fatigue Failure Assessment – Morrow')
-st.markdown(f"**Alternating Stress, σₐ (MPa):** {sigma_a:.2f}")
-st.markdown(f"**Mean Stress, σₘ (MPa):** {sigma_m:.2f}")
-st.markdown(f"**Endurance Limit, Sₑ (MPa):** {Se:.2f}")
-st.markdown(f"**Allowable σₐ (Morrow):** {Morrow_sigma_a_allow:.2f} MPa")
-st.markdown(f"**Safe (Morrow):** {'✅ Yes' if Morrow_Safe else '❌ No'}")#part 3
+calculated_param = {'Allowable σₐ (Morrow) (MPa)': "{:.2f}".format(Morrow_sigma_a_allow)}
+calculated_param_df = pd.DataFrame(calculated_param, index=[0])
+st.subheader('Fatigue Failure Assessment: Morrow')
+st.write(calculated_param_df)
+#part 3
 
 
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
