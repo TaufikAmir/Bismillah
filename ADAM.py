@@ -155,12 +155,11 @@ Morrow_sigma_a_allow = Se * (1 - (sigma_m / UTS))
 Morrow_Safe = sigma_a <= Morrow_sigma_a_allow
 
 # Goodman Fatigue Assessment part 3
-st.subheader('Fatigue Failure Assessment – Goodman')
-st.markdown(f"**Alternating Stress, σₐ (MPa):** {sigma_a:.2f}")
-st.markdown(f"**Mean Stress, σₘ (MPa):** {sigma_m:.2f}")
-st.markdown(f"**Endurance Limit, Sₑ (MPa):** {Se:.2f}")
-st.markdown(f"**Goodman Value:** {Goodman_Value:.3f}")
-st.markdown(f"**Safe (Goodman):** {'✅ Yes' if Goodman_Safe else '❌ No'}")
+calculated_param = {'Goodman Value': "{:.3f}".format(Goodman_Value)}
+calculated_param_df = pd.DataFrame(calculated_param, index=[0])
+st.subheader('Fatigue Failure Assessment: Goodman')
+st.write(calculated_param_df)
+
 
 # Soderberg Fatigue Assessment
 st.subheader('Fatigue Failure Assessment – Soderberg')
