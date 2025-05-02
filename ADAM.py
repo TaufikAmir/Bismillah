@@ -154,29 +154,33 @@ Gerber_Safe = Gerber_Value <= 1
 Morrow_sigma_a_allow = Se * (1 - (sigma_m / UTS))
 Morrow_Safe = sigma_a <= Morrow_sigma_a_allow
 
-# Streamlit display
-st.subheader('Fatigue Failure Assessment (Goodman, Soderberg, Gerber, Morrow)')
+# Shared fatigue parameters
+st.subheader('Fatigue Failure Assessment')
 
-fatigue_results = {
-    'Alternating Stress, σa (MPa)': f"{sigma_a:.2f}",
-    'Mean Stress, σm (MPa)': f"{sigma_m:.2f}",
-    'Endurance Limit, Se (MPa)': f"{Se:.2f}",
-    
-    'Goodman Value': f"{Goodman_Value:.3f}",
-    'Safe (Goodman)': "Yes" if Goodman_Safe else "No",
+st.markdown(f"**Alternating Stress, σₐ (MPa):** {sigma_a:.2f}")
+st.markdown(f"**Mean Stress, σₘ (MPa):** {sigma_m:.2f}")
+st.markdown(f"**Endurance Limit, Sₑ (MPa):** {Se:.2f}")
 
-    'Soderberg Value': f"{Soderberg_Value:.3f}",
-    'Safe (Soderberg)': "Yes" if Soderberg_Safe else "No",
+# Goodman
+st.subheader('Goodman Fatigue Assessment')
+st.markdown(f"**Goodman Value:** {Goodman_Value:.3f}")
+#st.markdown(f"**Safe (Goodman):** {'✅ Yes' if Goodman_Safe else '❌ No'}")
 
-    'Gerber Value': f"{Gerber_Value:.3f}",
-    'Safe (Gerber)': "Yes" if Gerber_Safe else "No",
+# Soderberg
+st.subheader('Soderberg Fatigue Assessment')
+st.markdown(f"**Soderberg Value:** {Soderberg_Value:.3f}")
+#st.markdown(f"**Safe (Soderberg):** {'✅ Yes' if Soderberg_Safe else '❌ No'}")
 
-    'Morrow Allowable σa (MPa)': f"{Morrow_sigma_a_allow:.2f}",
-    'Safe (Morrow)': "Yes" if Morrow_Safe else "No"
-}
+# Gerber
+st.subheader('Gerber Fatigue Assessment')
+st.markdown(f"**Gerber Value:** {Gerber_Value:.3f}")
+#st.markdown(f"**Safe (Gerber):** {'✅ Yes' if Gerber_Safe else '❌ No'}")
 
-fatigue_df = pd.DataFrame(fatigue_results, index=[0])
-st.write(fatigue_df)#PART 2 EXPERIMENT
+# Morrow
+st.subheader('Morrow Fatigue Assessment')
+st.markdown(f"**Allowable σₐ (Morrow):** {Morrow_sigma_a_allow:.2f} MPa")
+#st.markdown(f"**Safe (Morrow):** {'✅ Yes' if Morrow_Safe else '❌ No'}")
+
 
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
