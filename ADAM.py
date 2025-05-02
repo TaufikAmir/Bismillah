@@ -154,32 +154,37 @@ Gerber_Safe = Gerber_Value <= 1
 Morrow_sigma_a_allow = Se * (1 - (sigma_m / UTS))
 Morrow_Safe = sigma_a <= Morrow_sigma_a_allow
 
-# Shared fatigue parameters
-st.subheader('Fatigue Failure Assessment')
-
+# Goodman Fatigue Assessment part 3
+st.subheader('Fatigue Failure Assessment – Goodman')
 st.markdown(f"**Alternating Stress, σₐ (MPa):** {sigma_a:.2f}")
 st.markdown(f"**Mean Stress, σₘ (MPa):** {sigma_m:.2f}")
 st.markdown(f"**Endurance Limit, Sₑ (MPa):** {Se:.2f}")
-
-# Goodman
-st.subheader('Goodman Fatigue Assessment')
 st.markdown(f"**Goodman Value:** {Goodman_Value:.3f}")
-#st.markdown(f"**Safe (Goodman):** {'✅ Yes' if Goodman_Safe else '❌ No'}")
+st.markdown(f"**Safe (Goodman):** {'✅ Yes' if Goodman_Safe else '❌ No'}")
 
-# Soderberg
-st.subheader('Soderberg Fatigue Assessment')
+# Soderberg Fatigue Assessment
+st.subheader('Fatigue Failure Assessment – Soderberg')
+st.markdown(f"**Alternating Stress, σₐ (MPa):** {sigma_a:.2f}")
+st.markdown(f"**Mean Stress, σₘ (MPa):** {sigma_m:.2f}")
+st.markdown(f"**Endurance Limit, Sₑ (MPa):** {Se:.2f}")
 st.markdown(f"**Soderberg Value:** {Soderberg_Value:.3f}")
-#st.markdown(f"**Safe (Soderberg):** {'✅ Yes' if Soderberg_Safe else '❌ No'}")
+st.markdown(f"**Safe (Soderberg):** {'✅ Yes' if Soderberg_Safe else '❌ No'}")
 
-# Gerber
-st.subheader('Gerber Fatigue Assessment')
+# Gerber Fatigue Assessment
+st.subheader('Fatigue Failure Assessment – Gerber')
+st.markdown(f"**Alternating Stress, σₐ (MPa):** {sigma_a:.2f}")
+st.markdown(f"**Mean Stress, σₘ (MPa):** {sigma_m:.2f}")
+st.markdown(f"**Endurance Limit, Sₑ (MPa):** {Se:.2f}")
 st.markdown(f"**Gerber Value:** {Gerber_Value:.3f}")
-#st.markdown(f"**Safe (Gerber):** {'✅ Yes' if Gerber_Safe else '❌ No'}")
+st.markdown(f"**Safe (Gerber):** {'✅ Yes' if Gerber_Safe else '❌ No'}")
 
-# Morrow
-st.subheader('Morrow Fatigue Assessment')
+# Morrow Fatigue Assessment
+st.subheader('Fatigue Failure Assessment – Morrow')
+st.markdown(f"**Alternating Stress, σₐ (MPa):** {sigma_a:.2f}")
+st.markdown(f"**Mean Stress, σₘ (MPa):** {sigma_m:.2f}")
+st.markdown(f"**Endurance Limit, Sₑ (MPa):** {Se:.2f}")
 st.markdown(f"**Allowable σₐ (Morrow):** {Morrow_sigma_a_allow:.2f} MPa")
-#st.markdown(f"**Safe (Morrow):** {'✅ Yes' if Morrow_Safe else '❌ No'}")
+st.markdown(f"**Safe (Morrow):** {'✅ Yes' if Morrow_Safe else '❌ No'}")#part 3
 
 
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
