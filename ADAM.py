@@ -150,9 +150,11 @@ Gerber_Value = (sigma_a / Se) + ((sigma_m / UTS) ** 2)
 Gerber_Safe = Gerber_Value <= 1
 
 # Morrow Criterion (more accurate for mean stress effect at high strains)
-# Morrow equation: σa = Se*(1 - σm/UTS)
+# Morrow equation: σa = Se*(1 - σm/σf)
+Morrow_sigma_a_allow = Se * (1 - sigma_m / sigma_f)
 Morrow_Value = (sigma_a / Se) +  ( sigma_m / sigma_f )
 Morrow_Safe = sigma_a <= Morrow_sigma_a_allow
+
 
 
 
@@ -190,13 +192,13 @@ calculated_param_df = pd.DataFrame(calculated_param, index=[0])
 st.subheader('Calculated Corroded Pipe Burst Pressure via Gerber')
 st.write(calculated_param_df)
 
-# Display Morrow result
 calculated_param = {
-    'Morrow Allowable σa (MPa)': "{:.2f}".format(Morrow_sigma_a_allow)
+    'Allowable σₐ (Morrow) (MPa)': "{:.2f}".format(Morrow_sigma_a_allow)
 }
 calculated_param_df = pd.DataFrame(calculated_param, index=[0])
-st.subheader('Calculated Corroded Pipe Burst Pressure via Morrow')
+st.subheader('Fatigue Failure Assessment: Morrow')
 st.write(calculated_param_df)
+
 
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
