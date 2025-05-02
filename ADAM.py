@@ -198,13 +198,6 @@ calculated_param_df = pd.DataFrame(calculated_param, index=[0])
 st.subheader('Calculated Corroded Pipe Burst Pressure via Morrow')
 st.write(calculated_param_df)
 
-
-calculated_param = {'Goodman Value': "{:.3f}".format(Goodman_Value)}
-calculated_param_df = pd.DataFrame(calculated_param, index=[0])
-st.subheader('Calculated Corroded Pipe Burst Pressure via Goodman')
-st.write(calculated_param_df)
-
-
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
 st.subheader('Von Mises stress of Maximum Operating Pressure')
