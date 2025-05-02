@@ -136,7 +136,7 @@ Sigma_VM_Pipe_Min_Operating_Pressure = 1/m.sqrt(2)*m.sqrt((P1min-P2min)**2+(P2mi
 sigma_a = (Sigma_VM_Pipe_Max_Operating_Pressure - Sigma_VM_Pipe_Min_Operating_Pressure) / 2
 sigma_m = (Sigma_VM_Pipe_Max_Operating_Pressure + Sigma_VM_Pipe_Min_Operating_Pressure) / 2
 Se = 0.5 * UTS  # Assumed endurance limit
-
+sigma_f = (UTS + 345 )# Assumed Fatique Strength Coefficient
 # Goodman Criterion PART 2 Experiment
 Goodman_Value = (sigma_a / Se) + (sigma_m / UTS)
 Goodman_Safe = Goodman_Value <= 1
@@ -151,7 +151,7 @@ Gerber_Safe = Gerber_Value <= 1
 
 # Morrow Criterion (more accurate for mean stress effect at high strains)
 # Morrow equation: σa = Se*(1 - σm/UTS)
-Morrow_sigma_a_allow = Se * (1 - (sigma_m / UTS))
+Morrow_Value = (sigma_a / Se) +  ( sigma_m / sigma_f )
 Morrow_Safe = sigma_a <= Morrow_sigma_a_allow
 
 
