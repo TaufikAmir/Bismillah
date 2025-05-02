@@ -154,29 +154,52 @@ Gerber_Safe = Gerber_Value <= 1
 Morrow_sigma_a_allow = Se * (1 - (sigma_m / UTS))
 Morrow_Safe = sigma_a <= Morrow_sigma_a_allow
 
-# Streamlit display
-st.subheader('Fatigue Failure Assessment (Goodman, Soderberg, Gerber, Morrow)')
 
-fatigue_results = {
-    'Alternating Stress, σa (MPa)': f"{sigma_a:.2f}",
-    'Mean Stress, σm (MPa)': f"{sigma_m:.2f}",
-    'Endurance Limit, Se (MPa)': f"{Se:.2f}",
-    
-    'Goodman Value': f"{Goodman_Value:.3f}",
-    'Safe (Goodman)': "Yes" if Goodman_Safe else "No",
 
-    'Soderberg Value': f"{Soderberg_Value:.3f}",
-    'Safe (Soderberg)': "Yes" if Soderberg_Safe else "No",
-
-    'Gerber Value': f"{Gerber_Value:.3f}",
-    'Safe (Gerber)': "Yes" if Gerber_Safe else "No",
-
-    'Morrow Allowable σa (MPa)': f"{Morrow_sigma_a_allow:.2f}",
-    'Safe (Morrow)': "Yes" if Morrow_Safe else "No"
+# Display stress parameters first
+calculated_param = {
+    'Alternating Stress, σa (MPa)': "{:.2f}".format(sigma_a),
+    'Mean Stress, σm (MPa)': "{:.2f}".format(sigma_m),
+    'Endurance Limit, Se (MPa)': "{:.2f}".format(Se)
 }
+calculated_param_df = pd.DataFrame(calculated_param, index=[0])
+st.subheader('Fatigue Stress Parameters')
+st.write(calculated_param_df)
 
-fatigue_df = pd.DataFrame(fatigue_results, index=[0])
-st.write(fatigue_df)#PART 2 EXPERIMENT
+# Display Goodman result
+calculated_param = {
+    'Goodman Value': "{:.3f}".format(Goodman_Value)
+}
+calculated_param_df = pd.DataFrame(calculated_param, index=[0])
+st.subheader('Calculated Corroded Pipe Burst Pressure via Goodman')
+st.write(calculated_param_df)
+
+# Display Soderberg result
+calculated_param = {
+    'Soderberg Value': "{:.3f}".format(Soderberg_Value)
+}
+calculated_param_df = pd.DataFrame(calculated_param, index=[0])
+st.subheader('Calculated Corroded Pipe Burst Pressure via Soderberg')
+st.write(calculated_param_df)
+
+# Display Gerber result
+calculated_param = {
+    'Gerber Value': "{:.3f}".format(Gerber_Value)
+}
+calculated_param_df = pd.DataFrame(calculated_param, index=[0])
+st.subheader('Calculated Corroded Pipe Burst Pressure via Gerber')
+st.write(calculated_param_df)
+
+# Display Morrow result
+calculated_param = {
+    'Morrow Allowable σa (MPa)': "{:.2f}".format(Morrow_sigma_a_allow)
+}
+calculated_param_df = pd.DataFrame(calculated_param, index=[0])
+st.subheader('Calculated Corroded Pipe Burst Pressure via Morrow')
+st.write(calculated_param_df)
+
+
+
 
 calculated_param={'Sigma_VM_Pipe_Max_Operating_Pressure (MPa)': "{:.2f}".format(Sigma_VM_Pipe_Max_Operating_Pressure)}
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
