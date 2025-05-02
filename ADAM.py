@@ -65,7 +65,7 @@ PTresca = 2*t*UTS/(D)
 M = m.sqrt(1+0.8*(L/(m.sqrt(D*t)))) #Folias factor
 
 if L < m.sqrt(20*D*t):
-    P_ASME_B31G = (2*t*UTS/D)(1-(2/3)(Dc/t)/1-(2/3)*(Dc/t)/M)
+    P_ASME_B31G = (2*t*UTS/D)*(1-(2/3)*(Dc/t)/1-(2/3)*(Dc/t)/M)
 
 elif L > m.sqrt(20*D*t):
     P_ASME_B31G = (2*t*UTS/D)*(1-(Dc/t))
@@ -129,9 +129,9 @@ P2min = Pop_Min*D/(4*t)
 P3min = 0
 
 # VM stress Max and Min Operating Pressure
-Sigma_VM_Pipe_Max_Operating_Pressure = (1/m.sqrt(2))((P1max-P2max)2+(P2max-P3max)2+(P3max-P1max)2)*0.5
+Sigma_VM_Pipe_Max_Operating_Pressure = (1/m.sqrt(2))*((P1max-P2max)**2+(P2max-P3max)**2+(P3max-P1max)**2)**0.5
 
-Sigma_VM_Pipe_Min_Operating_Pressure = 1/m.sqrt(2)m.sqrt((P1min-P2min)2+(P2min-P3min)2+(P3min-P1min)*2)
+Sigma_VM_Pipe_Min_Operating_Pressure = 1/m.sqrt(2)*m.sqrt((P1min-P2min)**2+(P2min-P3min)**2+(P3min-P1min)**2)
 
 sigma_a = (Sigma_VM_Pipe_Max_Operating_Pressure - Sigma_VM_Pipe_Min_Operating_Pressure) / 2
 sigma_m = (Sigma_VM_Pipe_Max_Operating_Pressure + Sigma_VM_Pipe_Min_Operating_Pressure) / 2
@@ -204,3 +204,9 @@ st.markdown('[Case Study](https://drive.google.com/file/d/1Ako5uVRPYL5k5JeEQ_Xhl
 st.markdown('[Corroded Pipe Burst Data](https://docs.google.com/spreadsheets/d/1YJ7ziuc_IhU7-MMZOnRmh4h21_gf6h5Z/edit?gid=56754844#gid=56754844)', unsafe_allow_html=True)
 st.markdown('[Pre-Test](https://forms.gle/wPvcgnZAC57MkCxN8)', unsafe_allow_html=True)
 st.markdown('[Post-Test](https://forms.gle/FdiKqpMLzw9ENscA9)', unsafe_allow_html=True)
+
+can you seperate that show the calculated to user interface
+ "the Fatique assessment goodman"
+"the Fatique assessment soderberg"
+"the Fatique assessment gerber"
+"the Fatique assessment Morrow"
