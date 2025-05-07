@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from pickle import load
 import pickle
-import matplotlib.pyplot as plt #ploting graph coding
 import numpy as np
 import math as m
 from PIL import Image
