@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from pickle import load
 import pickle
+import matplotlib.pyplot as plt #ploting graph coding
 import numpy as np
 import math as m
 from PIL import Image
@@ -209,6 +210,37 @@ calculated_param={'Sigma_VM_Pipe_Min_Operating_Pressure (MPa)': "{:.2f}".format(
 calculated_param_df=pd.DataFrame(calculated_param, index=[0])
 st.subheader('Von Mises stress of Minimum Operating Pressure')
 st.write(calculated_param_df)
+
+import matplotlib.pyplot as plt #new coding for ploting graph
+
+n = 1  # Desired fatigue safety factor
+
+# Plot Goodman Diagram
+fig, ax = plt.subplots()
+
+x_vals = np.array([0, UTS])
+y_vals = Se * (1 - x_vals / UTS)
+ax.plot(x_vals, y_vals, color='red', label='Goodman Line')
+
+# Plot user's operating point
+ax.scatter(sigma_m, sigma_a, color='blue', label='Operating Point')
+
+# Plot limit line (safety factor n)
+safe_line_y = Se * (1 - x_vals / (n * UTS))
+ax.plot(x_vals, safe_line_y, color='green', linestyle='--', label=f'SF={n} Line')
+
+# Labels and limits
+ax.set_xlabel('Mean Stress, σm (MPa)')
+ax.set_ylabel('Alternating Stress, σa (MPa)')
+ax.set_title('Goodman Diagram')
+ax.set_xlim(0, UTS * 1.1)
+ax.set_ylim(0, Se * 1.5)
+ax.grid(True)
+ax.legend()
+
+# Display in Streamlit
+st.subheader("Goodman Fluctuating Stress Diagram")
+st.pyplot(fig) #new coding for ploting graph testing
 
 #Stresses = [Sigma_VM_Pipe_Max_Operating_Pressure, Sigma_VM_Pipe_Min_Operating_Pressure, Sy, UTS]
 #index = ["Svm_Max (MPa)", "Svm_Min (MPa)", "Yield Stress (MPa)", "UTS (MPa)"]
