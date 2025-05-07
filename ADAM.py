@@ -8,8 +8,7 @@ from PIL import Image
 import os
 from glob import glob
 #import matplotlib.pyplot as plt
-import streamlit as st
-from goodman_plot import create_goodman_plot  # import from your file
+
 
 
 st.header("Advanced corrodeD pipe structurAl integrity systeM (ADAM)")
