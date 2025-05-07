@@ -219,15 +219,6 @@ df = pd.DataFrame({"Stresses (MPa)": Stresses}, index=index)
 #st.pyplot(df.plot.barh(color={"Stresses (MPa)": "red"}, stacked=True).figure)
 
 
-# UI elements or calculations to get sigma_m and sigma_a
-sigma_m_input = st.number_input("Enter Mean Stress σm", value=50)
-sigma_a_input = st.number_input("Enter Alternating Stress σa", value=75)
-
-# Generate and show the plot
-fig = create_goodman_plot(sigma_m=sigma_m_input, sigma_a=sigma_a_input)
-st.pyplot(fig)
-
-
 st.subheader('Reference')
 st.write('Xian-Kui Zhu, A comparative study of burst failure models for assessing remaining strength of corroded pipelines, Journal of Pipeline Science and Engineering 1 (2021) 36 - 50, https://doi.org/10.1016/j.jpse.2021.01.008')
 
