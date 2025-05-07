@@ -211,9 +211,20 @@ calculated_param_df=pd.DataFrame(calculated_param, index=[0])
 st.subheader('Von Mises stress of Minimum Operating Pressure')
 st.write(calculated_param_df)
 
-import matplotlib.pyplot as plt #new coding for ploting graph
+import matplotlib.pyplot as plt  #new coding for ploting graph testing
 
-n = 1  # Desired fatigue safety factor
+# Set default or fallback values if inputs are missing or None
+default_sigma_m = 50   # MPa
+default_sigma_a = 75   # MPa
+default_Se = 200       # MPa (endurance limit)
+default_UTS = 400      # MPa (ultimate tensile strength)
+n = 1  # Safety factor
+
+# Use actual values if available, otherwise fallback to defaults
+sigma_m = sigma_m if 'sigma_m' in locals() and sigma_m is not None else default_sigma_m
+sigma_a = sigma_a if 'sigma_a' in locals() and sigma_a is not None else default_sigma_a
+Se = Se if 'Se' in locals() and Se is not None else default_Se
+UTS = UTS if 'UTS' in locals() and UTS is not None else default_UTS
 
 # Plot Goodman Diagram
 fig, ax = plt.subplots()
@@ -222,10 +233,10 @@ x_vals = np.array([0, UTS])
 y_vals = Se * (1 - x_vals / UTS)
 ax.plot(x_vals, y_vals, color='red', label='Goodman Line')
 
-# Plot user's operating point
+# Plot operating point
 ax.scatter(sigma_m, sigma_a, color='blue', label='Operating Point')
 
-# Plot limit line (safety factor n)
+# Plot safety factor line
 safe_line_y = Se * (1 - x_vals / (n * UTS))
 ax.plot(x_vals, safe_line_y, color='green', linestyle='--', label=f'SF={n} Line')
 
