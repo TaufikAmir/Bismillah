@@ -217,34 +217,35 @@ df = pd.DataFrame({"Stresses (MPa)": Stresses}, index=index)
 
 #st.pyplot(df.plot.barh(color={"Stresses (MPa)": "red"}, stacked=True).figure)
 #Creating graph coding here
-fig, ax =plt.subplot(figsize=(9,7))
+fig, ax = plt.subplots(figsize=(9, 7))
+
 # 1 1ine Goodman and Soderberg lines
 ax.plot([0, UTS], [Se, 0], color='blue', linewidth=2, label='Goodman Line (Se→UTS)')
 ax.plot([0, Sy], [Se, 0], color='red', linewidth=2, label='Soderberg Line (Se→Sy)')
 
 # 2 1ine Operating stress visualization
-ax.plot([mean_stress, mean_stress], [0, alt_stress], 'k--', linewidth=1.5, label='Operating Stress Range')
-ax.plot([0, mean_stress], [alt_stress, alt_stress], 'k--', linewidth=1.5)
+ax.plot([sigma_m, sigma_m], [0, sigma_a], 'k--', linewidth=1.5, label='Operating Stress Range')
+ax.plot([0, sigma_m], [sigma_a, sigma_a], 'k--', linewidth=1.5)
 
 # 3 1ine Mark key points
 ax.scatter(0, Se, color='green', s=100, label=f'Endurance Limit (Se={Se:.1f} MPa)')
 ax.scatter(UTS, 0, color='blue', s=100, label=f'UTS ({UTS} MPa)')
 ax.scatter(Sy, 0, color='red', s=100, label=f'Yield Stress ({Sy} MPa)')
-ax.scatter(mean_stress, alt_stress, color='yellow', s=150, 
-label=f'Operating Point (sm={mean_stress:.1f}, sa={alt_stress:.1f})') 
+ax.scatter(sigma_m, sigma_aalt_stress, color='yellow', s=150, 
+label=f'Operating Point (sm={sigma_m:.1f}, sa={sigma_a:.1f})') 
 # sm f0r max va1 & sa f0r min va1
 
 
 # Safety factor calculations (example)
-sf_goodman = Se/alt_stress * (1 - mean_stress/UTS)
-sf_soderberg = Se/alt_stress * (1 - mean_stress/Sy)
+sf_goodman = Se/sigma_a * (1 - sigma_m/UTS)
+sf_soderberg = Se/sigma_a * (1 - sigma_m/Sy)
 
 # Annotations
 ax.annotate(f'SF Goodman: {sf_goodman:.2f}', xy=(0.7, 0.9), xycoords='axes fraction')
 ax.annotate(f'SF Soderberg: {sf_soderberg:.2f}', xy=(0.7, 0.85), xycoords='axes fraction')
 
 # Set up axes
-max_value = max(Sy, UTS, Se, mean_stress*1.5, alt_stress*1.5)
+max_value = max(Sy, UTS, Se, sigma_m*1.5, sigma_a*1.5)
 ax.set_xlim(0, max_value)
 ax.set_ylim(0, max_value)
 ax.set_xlabel('Mean Stress (σm) [MPa]', fontsize=12)
