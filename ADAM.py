@@ -157,10 +157,49 @@ Morrow_sigma_a_allow = Se * (1 - sigma_m / sigma_f)
 Morrow_Value = (sigma_a / Se) +  ( sigma_m / sigma_f )
 Morrow_Safe = sigma_a <= Morrow_sigma_a_allow
 
+fig, ax = plt.subplots(figsize=(8, 6))
+
+#Calculate points for Goodman and Soderberg lines
+x_goodman = np.linspace(0, UTS, 100)
+y_goodman = Se * (1 - x_goodman/UTS)
+
+x_soderberg = np.linspace(0, Sy, 100)
+y_soderberg = Se * (1 - x_soderberg/Sy)
+
+# Plot Goodman and Soderberg lines
+ax.plot(x_goodman, y_goodman, 'b-', label='Goodman Line')
+ax.plot(x_soderberg, y_soderberg, 'r-', label='Soderberg Line')
+
+# Plot operating stress point
+ax.plot([sigma_m, sigma_m], [0, sigma_a], 'k--', linewidth=1)
+ax.plot([0, sigma_m], [sigma_a, sigma_a], 'k--', linewidth=1)
+ax.scatter(sigma_m, sigma_a, color='purple', s=100, 
+           label=f'Operating Point (σm={sigma_m:.1f}, σa={sigma_a:.1f})')
+
+# Mark key points
+ax.scatter(0, Se, color='green', s=100, label=f'Se = {Se:.1f} MPa')
+ax.scatter(UTS, 0, color='blue', s=100, label=f'UTS = {UTS:.1f} MPa')
+ax.scatter(Sy, 0, color='red', s=100, label=f'Sy = {Sy:.1f} MPa')
+
+# Set up axes
+max_value = max(Sy, UTS, Se, sigma_m*1.5, sigma_a*1.5)
+ax.set_xlim(0, max_value)
+ax.set_ylim(0, max_value)
+ax.set_xlabel('Mean Stress (σm) [MPa]', fontsize=12)
+ax.set_ylabel('Alternating Stress (σa) [MPa]', fontsize=12)
+ax.set_title('Goodman Diagram for Fatigue Assessment', fontsize=14)
+
+# Add grid and legend
+ax.grid(True, linestyle=':', alpha=0.7)
+ax.legend(fontsize=10)
+ax.set_aspect('equal')
+
+# Display the plot in Streamlit
+st.pyplot(fig)
 # Display stress parameters first
 calculated_param = {
-    'Alternating Stress, σa (MPa)': "{:.2f}".format(sigma_a),
-    'Mean Stress, σm (MPa)': "{:.2f}".format(sigma_m),
+    'Alternating Stress, sa (MPa)': "{:.2f}".format(sigma_a),
+    'Mean Stress, sm (MPa)': "{:.2f}".format(sigma_m),
     'Endurance Limit, Se (MPa)': "{:.2f}".format(Se)
 }
 calculated_param_df = pd.DataFrame(calculated_param, index=[0])
@@ -216,47 +255,6 @@ index = ["Svm_Max (MPa)", "Svm_Min (MPa)", "σa (MPa)", "σm (MPa)", "Se (MPa)",
 df = pd.DataFrame({"Stresses (MPa)": Stresses}, index=index)
 
 #st.pyplot(df.plot.barh(color={"Stresses (MPa)": "red"}, stacked=True).figure)
-#Creating graph coding here
-fig, ax = plt.subplots(figsize=(9, 7))
-
-# 1 1ine Goodman and Soderberg lines
-ax.plot([0, UTS], [Se, 0], color='blue', linewidth=2, label='Goodman Line (Se→UTS)')
-ax.plot([0, Sy], [Se, 0], color='red', linewidth=2, label='Soderberg Line (Se→Sy)')
-
-# 2 1ine Operating stress visualization
-ax.plot([sigma_m, sigma_m], [0, sigma_a], 'k--', linewidth=1.5, label='Operating Stress Range')
-ax.plot([0, sigma_m], [sigma_a, sigma_a], 'k--', linewidth=1.5)
-
-# 3 1ine Mark key points
-ax.scatter(0, Se, color='green', s=100, label=f'Endurance Limit (Se={Se:.1f} MPa)')
-ax.scatter(UTS, 0, color='blue', s=100, label=f'UTS ({UTS} MPa)')
-ax.scatter(Sy, 0, color='red', s=100, label=f'Yield Stress ({Sy} MPa)')
-ax.scatter(sigma_m, sigma_aalt_stress, color='yellow', s=150, 
-label=f'Operating Point (sm={sigma_m:.1f}, sa={sigma_a:.1f})') 
-# sm f0r max va1 & sa f0r min va1
-
-
-# Safety factor calculations (example)
-sf_goodman = Se/sigma_a * (1 - sigma_m/UTS)
-sf_soderberg = Se/sigma_a * (1 - sigma_m/Sy)
-
-# Annotations
-ax.annotate(f'SF Goodman: {sf_goodman:.2f}', xy=(0.7, 0.9), xycoords='axes fraction')
-ax.annotate(f'SF Soderberg: {sf_soderberg:.2f}', xy=(0.7, 0.85), xycoords='axes fraction')
-
-# Set up axes
-max_value = max(Sy, UTS, Se, sigma_m*1.5, sigma_a*1.5)
-ax.set_xlim(0, max_value)
-ax.set_ylim(0, max_value)
-ax.set_xlabel('Mean Stress (σm) [MPa]', fontsize=12)
-ax.set_ylabel('Alternating Stress (σa) [MPa]', fontsize=12)
-
-# Add proper aspect ratio and grid
-ax.set_aspect('equal')
-ax.grid(True, linestyle=':', alpha=0.7)
-ax.legend(fontsize=10, bbox_to_anchor=(1.05, 1), loc='upper left')
-
-st.pyplot(fig)
 
 
 st.subheader('Reference')
