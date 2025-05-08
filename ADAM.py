@@ -7,7 +7,7 @@ import math as m
 from PIL import Image
 import os
 from glob import glob
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 
 
@@ -216,6 +216,46 @@ index = ["Svm_Max (MPa)", "Svm_Min (MPa)", "σa (MPa)", "σm (MPa)", "Se (MPa)",
 df = pd.DataFrame({"Stresses (MPa)": Stresses}, index=index)
 
 #st.pyplot(df.plot.barh(color={"Stresses (MPa)": "red"}, stacked=True).figure)
+#Creating graph coding here
+fig, ax =plt.subplot(figsize=(9,7))
+# 1 1ine Goodman and Soderberg lines
+ax.plot([0, UTS], [Se, 0], color='blue', linewidth=2, label='Goodman Line (Se→UTS)')
+ax.plot([0, Sy], [Se, 0], color='red', linewidth=2, label='Soderberg Line (Se→Sy)')
+
+# 2 1ine Operating stress visualization
+ax.plot([mean_stress, mean_stress], [0, alt_stress], 'k--', linewidth=1.5, label='Operating Stress Range')
+ax.plot([0, mean_stress], [alt_stress, alt_stress], 'k--', linewidth=1.5)
+
+# 3 1ine Mark key points
+ax.scatter(0, Se, color='green', s=100, label=f'Endurance Limit (Se={Se:.1f} MPa)')
+ax.scatter(UTS, 0, color='blue', s=100, label=f'UTS ({UTS} MPa)')
+ax.scatter(Sy, 0, color='red', s=100, label=f'Yield Stress ({Sy} MPa)')
+ax.scatter(mean_stress, alt_stress, color='yellow', s=150, 
+label=f'Operating Point (sm={mean_stress:.1f}, sa={alt_stress:.1f})') 
+# sm f0r max va1 & sa f0r min va1
+
+
+# Safety factor calculations (example)
+sf_goodman = Se/alt_stress * (1 - mean_stress/UTS)
+sf_soderberg = Se/alt_stress * (1 - mean_stress/Sy)
+
+# Annotations
+ax.annotate(f'SF Goodman: {sf_goodman:.2f}', xy=(0.7, 0.9), xycoords='axes fraction')
+ax.annotate(f'SF Soderberg: {sf_soderberg:.2f}', xy=(0.7, 0.85), xycoords='axes fraction')
+
+# Set up axes
+max_value = max(Sy, UTS, Se, mean_stress*1.5, alt_stress*1.5)
+ax.set_xlim(0, max_value)
+ax.set_ylim(0, max_value)
+ax.set_xlabel('Mean Stress (σm) [MPa]', fontsize=12)
+ax.set_ylabel('Alternating Stress (σa) [MPa]', fontsize=12)
+
+# Add proper aspect ratio and grid
+ax.set_aspect('equal')
+ax.grid(True, linestyle=':', alpha=0.7)
+ax.legend(fontsize=10, bbox_to_anchor=(1.05, 1), loc='upper left')
+
+st.pyplot(fig)
 
 
 st.subheader('Reference')
