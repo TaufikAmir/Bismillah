@@ -7,7 +7,7 @@ import math as m
 from PIL import Image
 import os
 from glob import glob
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 
 
@@ -216,7 +216,56 @@ index = ["Svm_Max (MPa)", "Svm_Min (MPa)", "σa (MPa)", "σm (MPa)", "Se (MPa)",
 df = pd.DataFrame({"Stresses (MPa)": Stresses}, index=index)
 
 #st.pyplot(df.plot.barh(color={"Stresses (MPa)": "red"}, stacked=True).figure)
+# Generate data for Goodman line experiment graph
+sigma_m_values = np.linspace(0, UTS, 100)
+goodman_line = Se * (1 - sigma_m_values / UTS)
 
+# Generate data for Soderberg line
+soderberg_line = Se * (1 - sigma_m_values / Sy)
+
+# Generate data for Gerber parabola
+gerber_line = Se * (1 - (sigma_m_values / UTS) ** 2)
+
+# Create the plot
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Plot the lines
+ax.plot(sigma_m_values, goodman_line, label='Goodman Line', color='blue')
+ax.plot(sigma_m_values, soderberg_line, label='Soderberg Line', color='green')
+ax.plot(sigma_m_values, gerber_line, label='Gerber Parabola', color='red')
+
+# Plot the current operating point
+ax.scatter(sigma_m, sigma_a, color='red', s=100, label='Current Operating Point', zorder=5)
+
+# Add reference lines and labels
+ax.axhline(y=Se, color='gray', linestyle='--', label='Endurance Limit (Se)')
+ax.axvline(x=UTS, color='orange', linestyle='--', label='Ultimate Strength (UTS)')
+ax.axvline(x=Sy, color='purple', linestyle='--', label='Yield Strength (Sy)')
+
+# Set axis limits and labels
+ax.set_xlim(0, UTS * 1.1)
+ax.set_ylim(0, Se * 1.2)
+ax.set_xlabel('Mean Stress (σm) [MPa]')
+ax.set_ylabel('Alternating Stress (σa) [MPa]')
+ax.set_title('Modified Goodman Diagram')
+ax.grid(True)
+ax.legend()
+
+# Display the plot in Streamlit
+st.subheader('Modified Goodman Diagram')
+st.pyplot(fig)
+
+# Create a dataframe for the diagram data points
+diagram_data = pd.DataFrame({
+    'Mean Stress (MPa)': sigma_m_values,
+    'Goodman Line (MPa)': goodman_line,
+    'Soderberg Line (MPa)': soderberg_line,
+    'Gerber Parabola (MPa)': gerber_line
+})
+
+# Display the data table
+st.subheader('Diagram Data Points')
+st.write(diagram_data) #experiment graph 
 
 st.subheader('Reference')
 st.write('Xian-Kui Zhu, A comparative study of burst failure models for assessing remaining strength of corroded pipelines, Journal of Pipeline Science and Engineering 1 (2021) 36 - 50, https://doi.org/10.1016/j.jpse.2021.01.008')
