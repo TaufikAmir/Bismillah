@@ -7,7 +7,7 @@ import math as m
 from PIL import Image
 import os
 from glob import glob
-import matplotlib.pyplot as plt
+import matplotlib as plt
 
 
 
