@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 
 
-st.header("Advanced corrodeD pipe structurAl integrity systeM Fatigue AssessmenT Instrumentation for corroded pipe Hydrostatic burst pressure (ADAM FATIH)")
+st.header("Assessment & Diagnostics for Aging Materials Fatigue Assessment Tool for Integrity and Health")
 
 st.subheader('Dimensional Parameters')
 htp="https://www.researchgate.net/profile/Changqing-Gong/publication/313456917/figure/fig1/AS:573308992266241@1513698923813/Schematic-illustration-of-the-geometry-of-a-typical-corrosion-defect.png"
@@ -249,7 +249,7 @@ ax.set_xlim(0, max_value)
 ax.set_ylim(0, max_value)
 ax.set_xlabel('Mean Stress (Sm) [MPa]', fontsize=12)
 ax.set_ylabel('Alternating Stress (Sa) [MPa]', fontsize=12)
-ax.set_title('Goodman Diagram for Fatigue Assessment', fontsize=14)
+ax.set_title('Fluctuating-Stress Diagram', fontsize=14)
 
 # Add grid and legend
 ax.grid(True, linestyle=':', alpha=0.7)
